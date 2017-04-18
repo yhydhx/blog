@@ -1,6 +1,11 @@
 {% load staticfiles i18n cms_tags sekizai_tags menu_tags %}
 <!DOCTYPE html>
 <html lang="en">
+<!-- django CMS -->
+{% render_block "css" %}
+
+<!-- Divio Cloud -->
+{{ ALDRYN_SNAKE.render_head }}
 
 <head>
 
@@ -29,10 +34,21 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- django CMS toolbar adjustment -->
+    {% if request.toolbar %}
+    <style>
+        .cms-toolbar-expanded .navbar-custom {
+            margin-top: 45px;
+        }
+    </style>
+    {% endif %}
 
 </head>
 
 <body>
+      <!-- django CMS Toolbar -->
+    {% cms_toolbar %}
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -46,23 +62,7 @@
                 <a class="navbar-brand" href="index.html">Start Bootstrap</a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="post.html">Sample Post</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            {% show_menu 0 0 100 100 %}
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
@@ -88,9 +88,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum molestiae debitis nobis, quod sapiente qui voluptatum, placeat magni repudiandae accusantium fugit quas labore non rerum possimus, corrupti enim modi! Et.</p>
+                {% block content %}{% endblock %}
             </div>
         </div>
     </div>
@@ -146,6 +144,11 @@
 
     <!-- Theme JavaScript -->
     <script src="{% static 'js/clean-blog.min.js' %}"></script>
+    <!-- django CMS -->
+    {% render_block "js" %}
+
+    <!-- Divio Cloud -->
+    {{ ALDRYN_SNAKE.render_tail }}
 
 </body>
 
